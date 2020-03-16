@@ -1,0 +1,20 @@
+{
+    "Sftp": {
+        "Host": "127.0.0.1",
+        "Name": "",
+        "Pass": "",
+        "Port": 80
+    },
+    "Sync": [
+        {
+            "Name":"pc项目",
+            "Sourcepath": "/home/zlc/goProject/src/ftpsync/test",
+            "Targetpath": "/aaaaa"
+        },
+        {
+            "Name":"触屏项目",
+            "Sourcepath": "/home/zlc/goProject/src/ftpsync/test2",
+            "Targetpath": "http://www.baidu.com"
+        }
+    ]
+}

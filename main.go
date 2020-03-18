@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"ftpsync/common"
 	"ftpsync/myfsnotify"
 	"ftpsync/sftphandler"
 	"ftpsync/utils"
@@ -20,7 +21,7 @@ func main() {
 			select {
 			case path := <-watch.Path:
 				{
-					sftpClient.Upload(path.SoucePath, path.TargetPath)
+					sftpClient.Upload(path.Path, common.GetTargetPath(path.Path, path.SoucePath, path.TargetPath))
 					fmt.Println("返回路径 : ", path)
 				}
 

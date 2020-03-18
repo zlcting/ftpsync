@@ -80,6 +80,12 @@ func (sftpHandler *SftpHandler) uploadFile(localFilePath string, remotePath stri
 	defer srcFile.Close()
 	//上传到远端服务器的文件名,与本地路径末尾相同
 	var remoteFileName = path.Base(localFilePath)
+
+	//判断当前目录是否存在
+	if _, err := sftpHandler.SftpClient.Stat(remotePath); err != nil {
+		sftpHandler.SftpClient.Mkdir(remotePath)
+	}
+
 	//打开远程文件,如果不存在就创建一个
 	dstFile, err := sftpHandler.SftpClient.Create(path.Join(remotePath, remoteFileName))
 	if err != nil {
@@ -120,7 +126,7 @@ func (sftpHandler *SftpHandler) uploadDirectory(localPath string, remotePath str
 		}
 	}
 
-	fmt.Println(localPath + "  copy directory to remote server finished!")
+	fmt.Println(localPath + "  copy directory to remote server finished!" + remotePath + "目录L：")
 }
 
 //Upload 判断是否是路径属性

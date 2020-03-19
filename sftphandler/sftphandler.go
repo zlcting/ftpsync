@@ -2,6 +2,7 @@ package sftphandler
 
 import (
 	"fmt"
+	"ftpsync/mylog"
 	"ftpsync/utils"
 	"io/ioutil"
 	"log"
@@ -25,10 +26,6 @@ func NewSftpHandler() *SftpHandler {
 	w.SftpClient, _ = connect(utils.GlobalObject.Sftp.Name, utils.GlobalObject.Sftp.Pass, utils.GlobalObject.Sftp.Host, utils.GlobalObject.Sftp.Port)
 	return w
 }
-
-// 	if _, err := sftpClient.Stat(remoteDir); err != nil {
-// 		panic("Remote dir dose not exist: " + remoteDir)
-// 	}
 
 //connect 生成链接 对象
 func connect(user, password, host string, port int) (*sftp.Client, error) {
@@ -101,7 +98,7 @@ func (sftpHandler *SftpHandler) uploadFile(localFilePath string, remotePath stri
 		log.Fatal(err)
 	}
 	dstFile.Write(ff)
-	fmt.Println(localFilePath + "  copy file to remote server finished!")
+	mylog.Logger.Println("上传：" + localFilePath)
 }
 
 //uploadDirectory 遍历上传远程文件夹
@@ -126,7 +123,7 @@ func (sftpHandler *SftpHandler) uploadDirectory(localPath string, remotePath str
 		}
 	}
 
-	fmt.Println(localPath + "  copy directory to remote server finished!" + remotePath + "目录L：")
+	mylog.Logger.Println("上传本地目录：" + localPath + "远端目录：" + remotePath)
 }
 
 //Upload 判断是否是路径属性

@@ -2,7 +2,6 @@
 package main
 
 import (
-	"fmt"
 	"ftpsync/common"
 	"ftpsync/myfsnotify"
 	"ftpsync/sftphandler"
@@ -15,14 +14,15 @@ func main() {
 	for _, v := range utils.GlobalObject.Sync {
 		watch.WatchDir(v.Sourcepath, v.Targetpath) //添加监控目录
 	}
+
 	sftpClient := sftphandler.NewSftpHandler()
+
 	go func(*myfsnotify.NotifyFile) {
 		for {
 			select {
 			case path := <-watch.Path:
 				{
 					sftpClient.Upload(path.Path, common.GetTargetPath(path.Path, path.SoucePath, path.TargetPath))
-					fmt.Println("返回路径 : ", path)
 				}
 
 			}

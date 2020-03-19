@@ -137,6 +137,7 @@ func (sftpHandler *SftpHandler) Upload(localPath string, remotePath string) {
 		fmt.Println("文件路径不存在")
 		return
 	}
+
 	//判断是否是文件夹
 	if s.IsDir() {
 		sftpHandler.uploadDirectory(localPath, remotePath)
